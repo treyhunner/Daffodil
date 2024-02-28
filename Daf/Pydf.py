@@ -1976,7 +1976,7 @@ class Pydf:
             if isinstance(idxs, slice):
                 idxs = utils.slice_to_list(idxs)
             
-            idxs = [idx for idx in range(len(keydict)) if idx not in idxs]
+            idxs = sorted(set(range(len(keydict))) - set(idxs))
             
         return idxs
         
