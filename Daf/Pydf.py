@@ -1882,7 +1882,7 @@ class Pydf:
         """
         if not self.keyfield or not self.kd:
             if inverse:
-                return list(range(len(self)))
+                return range(len(self))
             else:
                 return []
             
@@ -1906,7 +1906,7 @@ class Pydf:
         """
         if not self.hd:
             if inverse:
-                return list(range(self.num_cols()))
+                return range(self.num_cols())
             else:
                 return []
         
@@ -2701,7 +2701,7 @@ class Pydf:
         """
         
         num_rows = len(self)
-        col_la = list(range(startat, startat + num_rows))
+        col_la = range(startat, startat + num_rows)
     
         self.insert_col(colname, col_la, icol)
 
@@ -3632,7 +3632,7 @@ class Pydf:
 
         if colnames_ls is None:
             cleaned_colnames_ls = list(self.hd.keys())
-            cleaned_colidxs_li = list(range(len(cleaned_colnames_ls)))
+            cleaned_colidxs_li = range(len(cleaned_colnames_ls))
         elif not (numeric_only and self.dtypes):
             cleaned_colnames_ls = [col for col in colnames_ls if col in self.hd]
             cleaned_colidxs_li = [self.hd[col] for col in cleaned_colnames_ls]  
