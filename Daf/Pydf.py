@@ -2145,13 +2145,10 @@ class Pydf:
         if not self.keyfield:
             raise RuntimeError
             
-        row_idx = self.kd.get(key, -1)
-        if row_idx < 0:
+        if key not in self.kd:
             return {}
         
-        record_da = self._basic_get_record_da(row_idx)
-        
-        return record_da
+        return self._basic_get_record_da(self.kd[key])
         
     def _basic_get_record_da(self, irow: int, include_cols: Optional[T_ls]=None) -> T_da:
         """ return a record at irow as dict 
