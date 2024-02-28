@@ -2275,7 +2275,7 @@ class Pydf:
             DEPRECATE, use select_by_dict().to_lod()
         """
         
-        return self.select_by_dict(selector_da=selector_da, expectmax=expect_max, inverse=inverse).to_lod()
+        return self.select_by_dict(selector_da=selector_da, expectmax=expectmax, inverse=inverse).to_lod()
 
         # # from utilities import utils
 
