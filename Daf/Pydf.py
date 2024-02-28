@@ -339,7 +339,7 @@ class Pydf:
 
         if not cols:
             if dtypes:
-                self.hd = {col: idx for idx, col in enumerate(dtypes.keys())}
+                self.hd = dict(with_index(dtypes.keys()))
         # elif sanitize_cols:        
                 # # make sure there are no blanks and columns are unique.
                 # # this does column renaming, and builds hd
@@ -461,7 +461,7 @@ class Pydf:
         
     def _cols_to_hd(self, cols: T_ls):
         """ rebuild internal hd from cols provided """
-        self.hd = {col:idx for idx, col in enumerate(cols)}
+        self.hd = dict(with_index(cols))
         
         
     @staticmethod
@@ -712,7 +712,7 @@ class Pydf:
         """ build key dictionary from col_idx col of lol """
         
         key_col = utils.select_col_of_lol_by_col_idx(lol, col_idx)
-        kd = {key: index for index, key in enumerate(key_col)}
+        kd = dict(with_index(key_col))
         return kd
         
         
@@ -1486,7 +1486,7 @@ class Pydf:
             # but there is only one header and data is lol
             # this saves space.
             
-            self.hd = {col_name: index for index, col_name in enumerate(records_lod[0].keys())}
+            self.hd = dict(with_index(records_lod[0].keys()))
             self.lol = [list(record_da.values()) for record_da in records_lod]
             self._rebuild_kd()   # only if the keyfield is set.
             return self
@@ -1527,7 +1527,7 @@ class Pydf:
             # but there is only one header and data is lol
             # this saves space.
             
-            self.hd = {col_name: index for index, col_name in enumerate(record_da.keys())}
+            self.hd = dict(with_index(record_da.keys()))
             self.lol = [list(record_da.values())]
             self._rebuild_kd()   # only if the keyfield is set.
             return self
@@ -2618,7 +2618,7 @@ class Pydf:
                 icol = len(self.hd)
             hl = list(self.hd.keys())
             hl.insert(icol, colname)
-            self.hd = {k: idx for idx, k in enumerate(hl)}
+            self.hd = dict(with_index(hl))
             
         # if keyfield:
             # self.keyfield = keyfield
@@ -4058,6 +4058,12 @@ class Pydf:
 
 
 Pydf.md_pydf_table = Pydf.to_md            
+
+
+def with_index(iterable):
+    """Like enumerate, but (val, i) tuples instead of (i, val)."""
+    for i, item in enumerate(iterable):
+        yield (item, i)
 
 
 # DO NOT DELETE THESE LINES.
