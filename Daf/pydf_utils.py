@@ -758,9 +758,7 @@ def safe_max(listlike):
     # note! Using try/except in to guard for the length of list is not specific enough. 
     #   We still need failure under other conditions.
 
-    if len(listlike) < 1:
-        return 0
-    return max(listlike)
+    return max([], default=0)
      
 
 def shorten_str_keeping_ends(string: str, limit: int) -> str:
