@@ -9,6 +9,9 @@ setup(
         'xlsx2csv==0.8.2',
         'Markdown==3.4.1',
     ],
+    extras_require={
+        'numpy': ['numpy'],
+    },
     author='Ray Lutz',
     author_email='raylutz@cognisys.com',
     description='Python Daffodil (Pydf) provides lightweight and fast 2-D dataframes',

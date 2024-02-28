@@ -273,7 +273,6 @@ import io
 import csv
 import copy
 import re
-import numpy as np
     
 sys.path.append('..')
 
@@ -3666,6 +3665,7 @@ class Pydf:
             For many numeric operations, convert a set of columns to NumPy
             and work directly with NumPy and then convert back. See to_numpy and from_numpy()
         """
+        import numpy as np
         # unit tests exist
         #   need tests for blanks and subsetting columns.
         
