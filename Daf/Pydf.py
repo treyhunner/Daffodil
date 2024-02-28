@@ -344,7 +344,7 @@ class Pydf:
                 # # make sure there are no blanks and columns are unique.
                 # # this does column renaming, and builds hd
                 # # Note: This is time consuming and should only be done when required!
-                # cols = self.__class__.sanitize_colnames(colnames=cols)
+                # cols = type(self).sanitize_colnames(colnames=cols)
         else:
             self._cols_to_hd(cols)
             if len(cols) != len(self.hd):
@@ -641,10 +641,10 @@ class Pydf:
         num_cols = self.num_cols() or len(self.hd)
         
         if new_cols is None:
-            new_cols = self.__class__._generate_spreadsheet_column_names_list(num_cols)
+            new_cols = type(self)._generate_spreadsheet_column_names_list(num_cols)
             
         elif sanitize_cols:
-            new_cols = self.__class__._sanitize_cols(new_cols, unnamed_prefix=unnamed_prefix)
+            new_cols = type(self)._sanitize_cols(new_cols, unnamed_prefix=unnamed_prefix)
         
         if num_cols and len(new_cols) < num_cols:
             raise AttributeError("Length of new_cols not the same as existing cols")
@@ -702,7 +702,7 @@ class Pydf:
         
         if self.keyfield and self.keyfield in self.hd:
             col_idx = self.hd[self.keyfield]
-            self.kd = self.__class__._build_kd(col_idx, self.lol)
+            self.kd = type(self)._build_kd(col_idx, self.lol)
             
         return self
 
@@ -1173,7 +1173,7 @@ class Pydf:
                 include_header=include_header,
                 )
 
-        self.__class__.buff_to_file(buff, file_path=file_path)
+        type(self).buff_to_file(buff, file_path=file_path)
         
         return file_path
 
@@ -1778,7 +1778,7 @@ class Pydf:
                 self.lol[irow] = value
             elif isinstance(value, dict):
                 self.assign_record_da_irow(irow, record_da=value)
-            elif isinstance(value, self.__class__):
+            elif isinstance(value, type(self)):
                 self.lol[irow] = value
             else:
                 # set the same value in the row for all columns.
@@ -1802,7 +1802,7 @@ class Pydf:
             elif isinstance(value, dict):
                 for irow in irows:
                     self.assign_record_da_irow(irow, record_da=value)
-            elif isinstance(value, self.__class__):
+            elif isinstance(value, type(self)):
                 for source_row, irow in enumerate(irows):
                     self.lol[irow] = value[source_row]
             else:
@@ -1829,7 +1829,7 @@ class Pydf:
                 # for irow in irows:
                     # self.assign_record_da_irow(irow, record_da=value)
                 
-            elif isinstance(value, self.__class__):
+            elif isinstance(value, type(self)):
                 for source_idx, irow in enumerate(irows):
                     self.lol[irow][icol] = value[source_idx][0]
                 
@@ -1854,7 +1854,7 @@ class Pydf:
                 for irow in irows:
                     self.assign_record_da_irow(irow, record_da=value)
                 
-            elif isinstance(value, self.__class__):
+            elif isinstance(value, type(self)):
                 for irow in irows:
                     for source_col, icol in enumerate(icols):
                         self.lol[irow][icol] = value[source_col]
@@ -1886,7 +1886,7 @@ class Pydf:
             else:
                 return []
             
-        return self.__class__.gkeys_to_idxs(
+        return type(self).gkeys_to_idxs(
                     keydict = self.kd,
                     gkeys = krows,
                     inverse = inverse,
@@ -1910,7 +1910,7 @@ class Pydf:
             else:
                 return []
         
-        return self.__class__.gkeys_to_idxs(
+        return type(self).gkeys_to_idxs(
                     keydict = self.hd,
                     gkeys = kcols,
                     inverse = inverse,
@@ -2264,7 +2264,7 @@ class Pydf:
         if self.hd: 
             return self._basic_get_record_da(irow, include_cols)
                 
-        colnames = self.__class__._generate_spreadsheet_column_names_list(num_cols=len(self.lol[irow]))
+        colnames = type(self)._generate_spreadsheet_column_names_list(num_cols=len(self.lol[irow]))
         return dict(zip(colnames, self.lol[irow]))
         
 
@@ -3973,7 +3973,7 @@ class Pydf:
             
             )
         if include_summary:    
-            mdstr += f"\n\[{len(self.lol)} rows x {len(self.hd)} cols; keyfield={self.keyfield}; {len(self.kd)} keys ] ({self.__class__.__name__})\n"
+            mdstr += f"\n\[{len(self.lol)} rows x {len(self.hd)} cols; keyfield={self.keyfield}; {len(self.kd)} keys ] ({type(self).__name__})\n"
         return mdstr
 
     def pydf_to_lol_summary(self, max_rows: int=10, max_cols: int=10, disp_cols:Optional[T_ls]=None) -> T_lola:
