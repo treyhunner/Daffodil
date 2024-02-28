@@ -1935,18 +1935,16 @@ class Pydf:
             
         elif isinstance(gkeys, (str, int)):
             idxs = []
-            idx = keydict.get(gkeys, -1)
-            if idx >= 0:
-                idxs.append(idx)
+            if gkeys in keydict:
+                idxs.append(keydict[gkeys])
             elif not silent_error:
                 raise KeyError
             
         elif isinstance(gkeys, list):     # can be list of integer or strings (or anything hashable)
             idxs = []
             for gkey in gkeys:
-                idx = keydict.get(gkey, -1)
-                if idx >= 0:
-                    idxs.append(idx)
+                if gkey in keydict:
+                    idxs.append(keydict[gkey])
                 elif not silent_error:
                     raise KeyError
                     
@@ -1955,9 +1953,8 @@ class Pydf:
             gkeys_range = range(gkeys.start or 0, gkeys.stop or len(keydict), gkeys.step or 1)
             idxs = []
             for gkey in gkeys_range:
-                idx = keydict.get(gkey, -1)
-                if gkey >= 0:
-                    idxs.append(idx)
+                if gkey in keydict:
+                    idxs.append(keydict[gkey])
                 elif not silent_error:
                     raise KeyError
          
