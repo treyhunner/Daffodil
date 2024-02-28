@@ -11,4 +11,5 @@ setup(
     author_email='raylutz@cognisys.com',
     description='Python Daffodil (Pydf) provides lightweight and fast 2-D dataframes',
     url='https://github.com/raylutz/Pydf',
+    python_requires='>=3.6',
 )
